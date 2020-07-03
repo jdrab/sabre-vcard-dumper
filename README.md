@@ -7,7 +7,7 @@ It also creates a _full.vcf file containing every contact from this addresbook.
 **Note**: does not check the vcard validity
 
 
-**config.yml** - description, pretty self-explanatory
+**config.yml** 
 
 ~~~yaml
 ---
@@ -22,14 +22,14 @@ db:
     AutoCommit: 0
 
 files:
-  # data_dir is relative to script location; sould not include
+  # data_dir is relative to script location; should not include
   # ending slash
   data_dir: data
   # if for some reason you don't want to create data_dir
   create_folders: yes
   # by default script removes data_dir and recreates it if necessary
   delete_data_dir_before_create: 1
-  # params for File::Path used by make_path and remove_tree subs
+  # params for File::Path used by make_path and remove_tree subroutines
   path_options:
     # by default I'd like to know what is happening
     verbose: 1
