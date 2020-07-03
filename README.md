@@ -1,11 +1,8 @@
-# Simple script for dumping vcards from sabredav database
+# Sabredav vcard exporter
 ---------------------------------------------------------
 
-Saves vcard data to UUID.vcf in directory data/_user_login_/_addressbook_uri/UUID.vcf.
-
-For evey addressbook it creates a _full.vcf is created, containing all contacts in _addressbook_uri directory.
-
-Also creates _full.vcf in "data_dir" directory.
+Saves vcard data to a $UUID.vcf in directory data/user_login/addressbook_uri/UUID.vcf.
+It also creates a _full.vcf file containing every contact from this addresbook. 
 
 **Note**: does not check the vcard validity
 
