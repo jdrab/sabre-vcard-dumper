@@ -10,7 +10,7 @@ db:
 
 files:
   # if for some reason you don't want to create data_dir
-  create_folders: yes
+  create_folders: 1
   # by default script removes data_dir and recreates it if necessary
   delete_data_dir_before_create: 1
   # export every contact to separate vcard - default - 1

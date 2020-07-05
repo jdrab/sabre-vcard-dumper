@@ -1,8 +1,8 @@
 # Sabredav vcard exporter
 ---------------------------------------------------------
 
-Saves vcard data to a $UUID.vcf in directory data/user_login/addressbook_uri/UUID.vcf.
-It also creates a _full.vcf file containing every contact from this addresbook. 
+Exports vcard data to a $UUID.vcf in directory data/user_login/addressbook_uri/UUID.vcf, if files.one_vcard_per_contact is set to 1.
+Also if files.one_merged_vcard_per_addressbook is set to 1 a merged $addressbook.vcf will be created per addressbook.
 
 **Note**: does not check the vcard validity
 
@@ -21,9 +21,10 @@ db:
     RaiseError: 1
     AutoCommit: 0
 
+# 0 - no/false, 1 - yes/true
 files:
   # if for some reason you don't want to create data_dir
-  create_folders: yes
+  create_folders: 1
   # by default script removes data_dir and recreates it if necessary
   delete_data_dir_before_create: 1
   # export every contact to separate vcard - default - 1

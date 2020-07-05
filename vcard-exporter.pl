@@ -2,7 +2,7 @@
 use warnings;
 use strict;
 
-our $VERSION = 0.1.0;
+our $VERSION = 0.1.1;
 
 use Path::Tiny;
 use YAML::Syck;
@@ -88,7 +88,7 @@ foreach my $user ( keys %data ) {
 
         my $addressbook_path = "$config->{files}{data_dir}/$user/$addressbook";
 
-        if ( $config->{files}{create_folders} eq 'yes' ) {
+        if ( $config->{files}{create_folders} == 1 ) {
             my @p_folder
               = make_path( $addressbook_path, $config->{files}{path_options} );
         }
