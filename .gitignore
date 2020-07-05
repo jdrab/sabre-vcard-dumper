@@ -19,3 +19,4 @@ sftp-config.json
 nbproject
 .sync_to
 data
+config.yml
