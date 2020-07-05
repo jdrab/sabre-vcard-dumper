@@ -14,6 +14,8 @@ db:
 files:
   create_folders: yes
   delete_data_dir_before_create: 1
+  one_vcard_per_contact: 1
+  one_merged_vcard_per_addressbook: 1
   # data_dir - withouth ending slash
   data_dir: data
   # params for File::Path make_path and remove_tree
