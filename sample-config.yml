@@ -1,16 +1,3 @@
-# Sabredav vcard exporter
----------------------------------------------------------
-
-Saves vcard data to a $UUID.vcf in directory data/user_login/addressbook_uri/UUID.vcf.
-It also creates a _full.vcf file containing every contact from this addresbook. 
-
-**Note**: does not check the vcard validity
-
-
-**config.yml** 
-
-~~~yaml
----
 db:
   # perl DBI dns line, paste there whatever your db driver needs
   dsn: DBI:mysql:database=sabredav;host=localhost
@@ -37,5 +24,3 @@ files:
   path_options:
     # by default I'd like to know what is happening
     verbose: 1
-
-~~~
