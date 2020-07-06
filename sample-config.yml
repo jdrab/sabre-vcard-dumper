@@ -11,6 +11,7 @@ db:
   options:
     RaiseError: 1
     AutoCommit: 0
+# display verbose output
 verbose: 1
 files:
   # if for some reason you don't want to create data_dir

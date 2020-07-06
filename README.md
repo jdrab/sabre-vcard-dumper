@@ -19,13 +19,13 @@ db:
   # addressbooks table - default addressbooks
   tbl_addressbooks: addressbooks
   # cards table - defautl cards
-  tbl_cards: cards 
+  tbl_cards: cards
   # once again, parameters for DBI driver
   options:
     RaiseError: 1
     AutoCommit: 0
-
-# 0 - no/false, 1 - yes/true
+# display verbose output
+verbose: 1
 files:
   # if for some reason you don't want to create data_dir
   create_folders: 1
