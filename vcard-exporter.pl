@@ -2,7 +2,7 @@
 use warnings;
 use strict;
 
-our $VERSION = 0.1.1;
+our $VERSION = 0.1.2;
 
 use Path::Tiny;
 use YAML::Syck;
@@ -56,9 +56,8 @@ while ( my $ref = $stmt->fetchrow_hashref ) {
     };
 
     # get all users vcards by his addressbookid
-    my $c_tbl = $dbh->quote_identifier( $config->{db}{tbl_cards} );
-    my $c_stmt = $dbh->prepare(
-                     "SELECT carddata,uri FROM $c_tbl where addressbookid = ?");
+    my $c_tbl  = $dbh->quote_identifier( $config->{db}{tbl_cards} );
+    my $c_stmt = $dbh->prepare("SELECT carddata,uri FROM $c_tbl where addressbookid = ?");
     $c_stmt->execute( $ref->{id} );
 
     # go through all his cards and push them
@@ -71,8 +70,7 @@ while ( my $ref = $stmt->fetchrow_hashref ) {
 }
 
 if ( $config->{files}{delete_data_dir_before_create} == 1 ) {
-    my $removed = remove_tree( $config->{files}{data_dir},
-                               $config->{files}{path_options} );
+    my $removed = remove_tree( $config->{files}{data_dir}, $config->{files}{path_options} );
 }
 
 #foreach user $data{login}
@@ -98,11 +96,10 @@ foreach my $user ( keys %data ) {
             if ( $config->{files}{path_options}{verbose} == 1 ) {
                 print "writing $addressbook_path/$vcard->{uri}\n";
                 print
-                  "\tappending content of $addressbook_path/$vcard->{uri} to _full.vcf\n";
+                  "\tappending content of $addressbook_path/$vcard->{uri} to $addressbook.vcf\n";
             }
             if ( $config->{files}{one_vcard_per_contact} == 1 ) {
-                path( $addressbook_path . q{/} . $vcard->{uri} )
-                  ->spew( $vcard->{carddata} );
+                path( $addressbook_path . q{/} . $vcard->{uri} )->spew( $vcard->{carddata} );
             }
 
             if ( $config->{files}{one_merged_vcard_per_addressbook} == 1 ) {

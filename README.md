@@ -16,6 +16,10 @@ db:
   dsn: DBI:mysql:database=sabredav;host=localhost
   user: dbusername
   password: dbpassword
+  # addressbooks table - default addressbooks
+  tbl_addressbooks: addressbooks
+  # cards table - defautl cards
+  tbl_cards: cards 
   # once again, parameters for DBI driver
   options:
     RaiseError: 1
