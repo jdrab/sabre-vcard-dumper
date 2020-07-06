@@ -2,12 +2,24 @@
 use warnings;
 use strict;
 
-our $VERSION = 0.1.2;
+our $VERSION = 0.1.3;
 
 use Path::Tiny;
 use YAML::Syck;
 use DBI;
 use File::Path qw(make_path remove_tree);
+use Carp qw(croak);
+
+sub verbose {
+    my $condition = shift or croak('Missing parameter for conditional verbose');
+    my $msg       = shift;
+    my $nl        = shift || "\n";
+
+    if ($condition) {
+        return $msg . $nl;
+    }
+    return;
+}
 
 # parse config
 my $config = LoadFile('config.yml');
@@ -69,40 +81,47 @@ while ( my $ref = $stmt->fetchrow_hashref ) {
     }
 }
 
+# remove datadir if reqested
 if ( $config->{files}{delete_data_dir_before_create} == 1 ) {
     my $removed = remove_tree( $config->{files}{data_dir}, $config->{files}{path_options} );
 }
 
-#foreach user $data{login}
 foreach my $user ( keys %data ) {
 
-    # unless ( $user eq 'somi' ) { next; }
     foreach my $addressbook ( keys %{ $data{$user} } ) {
 
-        #ak ma aspon jeden kontakt, tzn size v cards poli > 0
+        # if there are no contact, skip
         if ( scalar( @{ $data{$user}{$addressbook}{cards} } ) == 0 ) {
+            print verbose( $config->{verbose}, "skipping $user/$addressbook - no contacts found" );
             next;
         }
 
         my $addressbook_path = "$config->{files}{data_dir}/$user/$addressbook";
 
         if ( $config->{files}{create_folders} == 1 ) {
+
+            # prints a message if path_options verbose is set to 1
             my @p_folder
               = make_path( $addressbook_path, $config->{files}{path_options} );
         }
 
         foreach my $vcard ( @{ $data{$user}{$addressbook}{cards} } ) {
 
-            if ( $config->{files}{path_options}{verbose} == 1 ) {
-                print "writing $addressbook_path/$vcard->{uri}\n";
-                print
-                  "\tappending content of $addressbook_path/$vcard->{uri} to $addressbook.vcf\n";
-            }
+            print verbose( $config->{verbose},
+                     "\tappending content of $addressbook_path/$vcard->{uri} to $addressbook.vcf" );
+
             if ( $config->{files}{one_vcard_per_contact} == 1 ) {
+
+                print verbose( $config->{verbose}, "writing $addressbook_path/$vcard->{uri}" );
+
                 path( $addressbook_path . q{/} . $vcard->{uri} )->spew( $vcard->{carddata} );
             }
 
             if ( $config->{files}{one_merged_vcard_per_addressbook} == 1 ) {
+
+                print verbose( $config->{verbose},
+                     "\tappending content of $addressbook_path/$vcard->{uri} to $addressbook.vcf" );
+
                 path( $addressbook_path . q{/} . $addressbook . '.vcf' )
                   ->append( $vcard->{carddata} . "\n" );
             }
@@ -112,6 +131,11 @@ foreach my $user ( keys %data ) {
 
 }
 
-$dbh->disconnect;
+if ( $dbh->disconnect ) {
+    print verbose( $config->{verbose}, 'disconnected' );
+}
+else {
+    print $dbh->errstr . "\n";
+}
 
 1;

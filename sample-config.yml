@@ -11,7 +11,7 @@ db:
   options:
     RaiseError: 1
     AutoCommit: 0
-
+verbose: 1
 files:
   # if for some reason you don't want to create data_dir
   create_folders: 1
